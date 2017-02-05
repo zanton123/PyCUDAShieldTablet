@@ -1,4 +1,4 @@
-# PyCUDAShieldTablet
+# Programming and Running PyCUDA applications on the NVIDIA Shield Tablet (Tegra K1)
 
 This is a nascent repository for instructions on how to get PyCUDA running on the NVIDIA Shield Tablet (and possibly Shield Tablet K1) using Termux (by Fredrik Fornwall).
 
