@@ -1,4 +1,4 @@
-# Programming and Running PyCUDA applications on the Google Pixel C (Tegra X1) and NVIDIA Shield (Tegra K1) using CUDA 7.0
+# Programming and Running PyCUDA applications on the Google Pixel C (Tegra X1) and NVIDIA Shield Tablet (Tegra K1) using CUDA 7.0
 
 This repository contains the files to get PyCUDA running on the Google Pixel C using Termux (by Fredrik Fornwall).
 
