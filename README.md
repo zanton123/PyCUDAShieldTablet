@@ -87,4 +87,18 @@ The CUDA executables will need to be linked to Android libraries and running in 
 
 The following sections provide detailed instructions on how to get the required files and how to string them together for a working system.
 
+The newest version of NVIDIA CodeWorks for Android 1R5 now provides support for Android Marshmallow and CUDA 7.0 for Tegra X1 devices and is compatible with the higher versions of the Google Pixel C. Notably, CUDA 7.0 is also available for armv7l and will work on the NVIDIA Shield Tablet despite the official support is only for version 6.5. NVIDIA CodeWorks needs to be installed on an Intel/AMD x64 processor bearing PC running Ubuntu 14.04 (AMD64). Point your Web browser to:
 
+https://developer.nvidia.com/gameworksdownload#?dn=codeworks-for-android-1r5
+
+and select **Codeworks for Android 1R5 2016/09/07 DOWNLOADS Ubuntu (64 bit)** in your Web browser. You will be asked to sign into your NVIDIA Developer program account. If not a member yet, it is time to register with NVIDIA and signup, which is usually quick. You can then download the **CodeWorksforAndroid-1R5-linux-x64.run** file. Locate the file in the Downloads folder, add execute permission, and run in an Ubuntu terminal (not on the Pixel C or Shield Tablet):
+```
+cd Downloads/
+chmod +x CodeWorksforAndroid-1R5-linux-x64.run
+./CodeWorksforAndroid-1R5-linux-x64.run
+```
+This will install NVIDIA's Android Studio and the CUDA toolkit. If you are runnuing Ubuntu on an old Laptop that has no CUDA installed, the CUDA toolkit might not install automatically with CodeWorks. It is still possible to get the CUDA toolkit by first installing an older version of AndroidWorks or GameWorks for Android and then upgrading to CodeWorks for Android 1R5 with above run file.
+
+After the installation you should have a full development environment for Android including an Eclipse based IDE setup for native Android development. The files for the Pixel C are in the **~/NVPACK/cuda-android-7.0/aarch64-linux-androideabi/** folder and for the Shield Tablet the files in **~/NVPACK/cuda-android-7.0/armv7-linux-androideabi/** are of interest. The include/ folder contains the CUDA header files, the lib64/ and lib/ folders contains the CUDA libraries including libcudart.so for Android, the samples/ folder with the CUDA samples, and the bin/ folder contains some useful tools for profiling and analysing CUDA applications on Android. Transfer these folders to a portable disk or USB drive.
+
+In Termux navidate to the usr/ folder and add a local/cuda-7.0/ folder:
