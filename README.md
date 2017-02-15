@@ -155,11 +155,11 @@ cd lib
 ln -s /system/vendor/libcuda.so libcuda.so
 ```
 
-The NVIDIA CUDA for Android files are now in /data/data/com.termux/files/usr/local/cuda-7.0. We will install the Linux for Tegra executables for compiling CUDA C++ next.
+The NVIDIA CUDA for Android files are now in /data/data/com.termux/files/usr/local/cuda-7.0. Make sure that files in the bin/ folder have execute permission. We will install the Linux for Tegra executables for compiling CUDA C++ next.
 
 ##NVIDIA Linux for Tegra
 
-NVIDIA also does not supply CUDA compiler components that run natively on Android (the toolkit contains only profiling and analysis tools ported to Android). However, both armhf for the Tegra K1 and ARM64 for the Tegra X1 versions are in the Linux for Tegra Archive: 
+NVIDIA does not supply CUDA compiler components that run natively on Android (the toolkit contains only profiling and analysis tools ported to Android). However, both armhf for the Tegra K1 and ARM64 for the Tegra X1 versions are in the Linux for Tegra Archive: 
 
 https://developer.nvidia.com/embedded/linux-tegra-archive
 
