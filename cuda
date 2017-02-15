@@ -1,3 +1,0 @@
-export PATH=/data/data/com.termux/files/usr/bin:/data/data/com.termux/files/usr/bin/applets:/system/bin:/system/vendor/bin
-export LD_LIBRARY_PATH=/data/data/com.termux/files/usr/local/cuda/lib:/data/data/com.termux/files/usr/lib:/system/lib:/system/vendor/lib:/data/data/com.termux/files/usr/linux
-export TMPDIR=/data/data/com.termux/files/home/tmp
