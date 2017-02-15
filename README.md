@@ -13,10 +13,10 @@ Running Termux opens an Android Terminal with a shell command prompt. This Andro
 Follow the Termux online help to setup storage and preferences:
 https://termux.com/help.html
 
-This tutorial starts with installing several Python packages that are specially useful for seuqence analysis. If you are not a biologist or do not care you can skip through the initial steps, but do install numpy, cython and pycuda obviously.
-
 
 ##Install Python 2.7 in Termux
+
+This tutorial starts with installing several useful packages in Termux. Python packages that are specially useful for sequence analysis might not be of interest to people that are not a biologists or do not care. You can savely skip through these, but do install numpy, cython and pycuda obviously these are needed.
 
 From the terminal prompt enter the following commands:
 ```
