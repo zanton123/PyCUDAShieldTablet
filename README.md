@@ -371,3 +371,164 @@ From the **Tegra_Linux_Sample-Root-Filesystem_R24.1.0_aarch64.tbz2** archive cop
     └── tmp
 
 ```
+Shell files for the home/ folder (cuda, normal, and .bashrc), and the usr/bin/ folder (nvcc, nvcc_android, and linux_sh) are in the respective folders of this repository.
+
+Install CUDA 7.0 samples
+
+```
+tar -czvf CUDA-7.0-samples.tar.gz NVIDIA-cuda-7.0-samples
+
+extract:
+
+tar -xzvf <archive,tar.gz> <folder>
+
+cd to folder, . cuda, cp nvcc_ ... script and compile . nvcc_ ...
+```
+
+##Install PyCUDA form sources
+
+Download pycuda from PyPi https://pypi.python.org/pypi/pycuda the archive pycuda-2016.1.2.tar.gz to the Download folder using your web browser. For downloading using wget use the following URL for the file:
+
+https://pypi.python.org/packages/e8/3d/4b6b622d8a22cace237abad661a85b289c6f0803ccfa3d2386103307713c/pycuda-2016.1.2.tar.gz
+
+```
+cd
+mkdir pycuda
+cd pycuda
+cp ~/storage/shared/Download/pycuda-2016.1.2.tar.gz ./
+tar -xzvf pycuda-2016.1.2.tar.gz
+cd  pycuda-2016.1.2
+```
+
+On the Shield Tablet you will need to set C and C++ compiler flags for GNU make (not needed on the Pixel C):
+```
+export CFLAGS="-target=armv7-linux-android -D__ANDROID__"
+export CXXFLAGS="-target=armv7-linux-android -D__ANDROID__ -stdlib=libgnustl_shared"
+# else you will generate a dynamic link error for missing __atomic_fetch_add_4 symbol
+
+python2 configure.py --cuda-root=/data/data/com.termux/files/usr/local/cuda
+make
+
+make install
+```
+On the Shield Tablet the nvcc shell script needs to option nvcc as follows for pycuda to run (not needed on the Pixel C):
+proot ... /nvcc -std=c++11 -m32 -Xcompiler -mandroid -Xcompiler -D__ANDROID__
+Do not specify the compute -arch=sm_32 here as pycuda will do so and nvcc fails on a duplicate compute arch option (pycuda uses -ptx, -fatbin, or -cubin compilation modes).
+```
+cd test
+python2 test_driver.py
+python2 test_gpuarray.py
+python2 test_cumath.py
+```
+Examine the output and check the errors. Some test will fail on the tegras. However, if there is ubandant fail something is probably be wrong.
+On the Pixel C (Tegra X1), test_driver.py fails the test_registered_memory and streamed_kernels tests, test_cumath.py fails the test_unary_func_kwargs test, and test_gpuarray.py fails test_scan.
+On the Shield Tablet (Tegra K1), test_driver.py fails the test_simple_kernel_2 (python int too large to convert to C long), and test_register_host_memory (function not supported) tests, test_cumath.py passes all 28 tests, and test_gpuarray.py fails test_scan (import error on Mako). Overall the tegra K1 seems to perform pretty well despite we are using unsupported CUDA 7.0 from the Tegra X1 Jetpack 2.2 (Tegra K1 Jetpack has CUDA 6.5). Care should be taken with integer data types on the 32-bit system.
+
+In case you want to rebuild pycuda with different options in the future the following packages should be uninstalled:
+```
+pip2 uninstall pycuda
+pip2 uninstall pytools
+```
+
+##Installing MAXAS on the Pixel C
+
+MAXAS by Scott Grey at NervanaSystems https://github.com/NervanaSystems/maxas requires nvdisasm from the CUDA 6.5 toolkit (maxas invokes cuobjdump, which then invokes nvdisasm). For the Pixel C we will require a arm64 version for Tegra X1. Nvidia offers a generic CUDA 6.5 toolkit for arm64 in the CUDA archive: https://developer.nvidia.com/cuda-toolkit-65
+
+Download the generic CUDA Toolkit under ARMv8 64-bit*** and extract its content. When asked by the installer provide a path in your Download folder, eg ~/Downloads/cuda65arm64
+```
+chmod +x  cuda_6.5.14_linux_aarch64_native.run
+./cuda_6.5.14_linux_aarch64_native.run --extract-only ~/Downloads/cuda65arm64
+```
+Once the run file archive is unpacked, nvdisasm and cuobjdump executables are in ~/Downloads/cuda65arm64/bin. Copy this file to the Pixel C Downloads folder and them into the cuda/bin folder next to the CUDA 70 versions:
+```
+cd
+cp ~/storage/shared/Downloads/cuobjdump ../usr/local/cuda/bin/nvdisasm65
+cp ~/storage/shared/Downloads/cuobjdump ../usr/local/cuda/bin/cuobjdump65
+chmod +x ../usr/local/cuda/bin/nvdisasm65
+chmod +x ../usr/local/cuda/bin/cuobjdump65
+```
+
+Install maxas from github repository https://github.com/NervanaSystems/maxas.git
+```
+cd
+git clone https://github.com/NervanaSystems/maxas.git
+cd maxas
+perl Makefile.PL
+make
+make install
+```
+
+Generate scripts for running the cuobject and nvdiasm linux binaries under Android and conveniently engaging maxas:
+```
+cd
+vi ../usr/bin/maxas
+```
+Enter insert mode (`i`) and type:
+```
+maxas.pl $@
+```
+
+Save and close the file with `Ctrl`+`c`, then `:wq` ENTER, then set executable permission:
+```
+chmod +x ../usr/bin/maxas
+vi ../usr/bin/nvdisasm
+```
+Enter insert mode (`i`) and type:
+```
+#! /data/data/com.termux/files/usr/bin/sh
+/data/data/com.termux/files/lib/ld-linux-aarch64.so.1 /data/data/com.termux/files/usr/local/cuda/bin/nvdisasm65 $@
+```
+
+Save and close the file with `Ctrl`+`c`, then `:wq` ENTER, then set executable permission:
+```
+chmod +x ../usr/bin/nvdisasm
+vi ../usr/bin/cuobjdump
+```
+Enter insert mode (`i`) and type:
+```
+#! /data/data/com.termux/files/usr/bin/sh
+/data/data/com.termux/files/lib/ld-linux-aarch64.so.1 /data/data/com.termux/files/usr/local/cuda/bin/cuobjdump65 $@
+```
+
+Save and close the file with `Ctrl`+`c`, then `:wq` ENTER, then set executable permission:
+```
+chmod +x ../usr/bin/cuobjdump
+```
+add to the LD_LIBRARY_PATH
+```
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/data/data/com.termux/files/lib/aarch64-linux-gnu:/data/data/com.termux/usr/lib/aarch64-linux-gnu
+```
+Try it out:
+```
+cd
+cd CUDA-7.0-samples/0_Simple/vectorAddDrv
+nvcc -cubin -arch=sm_50 vectorAdd_kernel.cu -o vectorAdd_kernel_50.cubin
+maxas -t vectorAdd_kernel_50.cubin
+```
+
+The -t command test if instructions in the cubin can be decoded. You will see some warnings about deprecated perl regex functions but no error. To extract a SASS file use the following command:
+```
+maxas -e vectorAdd_kernel_50.cubin vectorAdd_kernel_50.sass
+cat vectorAdd_kernel_50.sass
+```
+
+You should see now the SASS of the vectorAdd_kernel. Note that this all is for compute architecture sm_50 as nvdisasm from the CUDA toolkit 6.5 cannot process sm_53. This is a problem if you want to assemble the kernel and run it on the Pixel C. Tegra X1 requires sm53 cubin code and will simply not run sm_50 code. One way to circumvent this problem is by reinserting the (modified) kernel into a sm_53 cubin file that is compiled by nvcc from the same vectorAdd_kernel.cu. The following instructions will insert the SASS into the vectorAdd_kernel.cubin file in a way that it can run on the Pixel C:
+```
+nvcc -cubin -arch=sm_53 vectorAdd_kernel.cu -o vectorAdd_kernel_53.cubin
+maxas -i vectorAdd_kernel_50.sass vectorAdd_kernel_53.cubin vectorAdd_kernel.cubin
+```
+To test you will need to build the vectorAddDrv.cpp executable. This can be compiled using clang as it is a regular c++ file (you will need to link with libcuda.so). The following instructions use nvcc to show that it works:
+```
+nvcc -m64 -std=c++11 -Xcompiler -D__ANDROID__ -Xcompiler -mandroid -Xcompiler -fPIC -Xcompiler -pie -Xcompiler -nostdlib -Xlinker -nostdlib -Xlinker --eh-frame-hdr -Xlinker -pie -Xlinker -maarch64linux -Xlinker -dynamic-linker=/system/bin/linker64 -arch=sm_53 -I/usr/lib/gcc/aarch64-linux-gnu/4.8/include -I/usr/local/cuda/include -I../../common/inc -Xlinker /usr/lib/crtbegin_dynamic.o -L/system/lib64 -L/system/vendor/lib64 -lnvcompute -L/usr/local/cuda/lib64 -lcudart -L/usr/lib -lgnustl_shared -Xlinker /usr/lib/crtend_android.o -o vectorAddDrv vectorAddDrv.cpp
+```
+
+This command line can be adapted to compile any cuda application. And most of the options are necessary. To make it easier you can generate a nvcc_android script that contains all options but the source and output file names. Now run the vectorAddDrv executable:
+```
+./vectorAddDrv
+```
+That's it! You just ran a kernel that has been reconstituted from SASS. Make sure you do not have any PTX files in the same folder. vectorAddDrv will first look for vectorAdd_kernel64.ptx and only if not found try to load vectorAdd_kernel.cubin. MaxAs is a very powerful and experimental tool so be careful you might mess up the control instructions and then it is up to your Tegra to survive!
+
+Endnote: You can load (modified) cubin kernels in PyCUDA. The last lines of the maxas perl script instruct on how to insert modified kernels back into CUDA applications so they can be engaged using the CUDA runtime API. This makes the Pixel C a full-fledged CUDA development system. The latest MaxAsGrammar.pm adds capabilities for encoding Pascal instructions, which are GP104 and GP100 native. For using nvdisasm from CUDA 8.0 to generate SASS from sm_60 kernels MaxAs.pm has been adapted by Hugh Perkins and is available at:
+ https://github.com/hughperkins/maxas/blob/1c0fef7298152e9e62ca811a7d4ccba30541fcd3/lib/MaxAs/MaxAs.pm
+
+Essentially, this allows you to write SASS for kernels running on Piz Daint. You will need to get a good grip on SASS and the GPU architecture, though.
