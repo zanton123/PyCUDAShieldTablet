@@ -82,7 +82,7 @@ Essentially, the idea is the same as of the GNURoot Debian app but we make much 
 
 https://play.google.com/store/apps/details?id=com.gnuroot.debian&hl=en
 
-The CUDA executables will be linked to Android libraries and running in the Android system. This is necessary as it appears the Android linker will not load and link to libcuda.so from a PRoot environment and the linux dynamic loader appears not capable to link to libcuda.so. The reason for this is not entirely clear and could involve Selinux or setuid restrictions in the later Android versions. Installing the Linux for Tegra CUDA toolkit and using libcuda.so in GNURoot Debian allow the use of the CUDA driver API in Android KitKat 4.4.
+The CUDA executables will be linked to Android libraries and running in the Android system. This is necessary as it appears the Android linker will not load and link to libcuda.so from a PRoot environment and the linux dynamic loader appears not capable to link to libcuda.so. The reason for this is not entirely clear and could involve Selinux or setuid restrictions in the later Android versions. Installing the Linux for Tegra CUDA toolkit and libcuda.so in the GNURoot Debian PRoot environment does allow the use of the CUDA driver API in Android KitKat 4.4.
 
 
 The following sections provide detailed instructions on how to get the required files and how to string them together for a working system.
