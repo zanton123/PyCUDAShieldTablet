@@ -84,6 +84,9 @@ https://play.google.com/store/apps/details?id=com.gnuroot.debian&hl=en
 
 The CUDA executables will need to be linked to Android libraries and running in the Android system. This is necessary as it appears the Android linker will not load and link to libcuda.so from a PRoot environment and the linux dynamic loader appears not capable to link to libcuda.so. The reason for this is not entirely clear and could involve Selinux or setuid restrictions in the later Android versions. Also introduction of a linux version of libcuda.so into the PRoot environment is not succesful as access to the device character files is blocked and libcuda.so will attempt generating the character files through loading the gpu android kernel module via modprobe. Obviously, this requires root access and will fail on a non-rooted device. Installing the Linux for Tegra CUDA toolkit and libcuda.so in the GNURoot Debian PRoot environment does allow the use of the CUDA driver API in Android KitKat 4.4, where the device character files appear accessible from non-root user space.
 
+To install PRoot in Termux you can use the following command at the terminal prompt:
+
+`apt install proot`
 
 The following sections provide detailed instructions on how to get the required files and how to string them together for a working system.
 
