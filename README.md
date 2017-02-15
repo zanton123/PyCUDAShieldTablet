@@ -102,3 +102,55 @@ This will install NVIDIA's Android Studio and the CUDA toolkit. If you are runnu
 After the installation you should have a full development environment for Android including an Eclipse based IDE setup for native Android development. The files for the Pixel C are in the **~/NVPACK/cuda-android-7.0/aarch64-linux-androideabi/** folder and for the Shield Tablet the files in **~/NVPACK/cuda-android-7.0/armv7-linux-androideabi/** are of interest. The include/ folder contains the CUDA header files, the lib64/ and lib/ folders contains the CUDA libraries including libcudart.so for Android, the samples/ folder with the CUDA samples, and the bin/ folder contains some useful tools for profiling and analysing CUDA applications on Android. Transfer these folders to a portable disk or USB drive.
 
 In Termux navidate to the usr/ folder and add a local/cuda-7.0/ folder:
+```
+cd ~/../usr
+mkdir local
+cd local
+mkdir cuda-7.0
+```
+Add a symbolic link to cuda:
+```
+ln -s cuda-7.0 cuda
+```
+Copy the files from your portable drive to the Download folder using a file manager App (eg. ES File Explorer). Then copy the files and all subfolders to the usr/local/cuda-7.0/ folder.
+
+**_For the Pixel C:_**
+```
+cd cuda-7.0
+mkdir bin
+cp -r ~/storage/shared/Downloads/cuda-android-7.0/aarch64-linux-androideabi/bin/* bin/
+mkdir include
+cp -r ~/storage/shared/Downloads/cuda-android-7.0/aarch64-linux-androideabi/include/* include/
+mkdir lib64
+cp -r ~/storage/shared/Downloads/cuda-android-7.0/aarch64-linux-androideabi/lib64/* lib64/
+mkdir samples
+cp -r ~/storage/shared/Downloads/cuda-android-7.0/aarch64-linux-androideabi/samples/* samples/
+```
+Now add a symbolic link for lib and libcuda.so on the Pixel C:
+```
+ln -s lib64/ lib
+cd lib64
+ln -s /system/vendor64/libnvcompute.so libcuda.so
+```
+
+**_For the Shield Tablet:_**
+```
+cd cuda-7.0
+mkdir bin
+cp -r ~/storage/shared/Downloads/cuda-android-7.0/armv7-linux-androideabi/bin/* bin/
+mkdir include
+cp -r ~/storage/shared/Downloads/cuda-android-7.0/armv7-linux-androideabi/include/* include/
+mkdir lib64
+cp -r ~/storage/shared/Downloads/cuda-android-7.0/armv7-linux-androideabi/lib/* lib/
+mkdir samples
+cp -r ~/storage/shared/Downloads/cuda-android-7.0/armv7-linux-androideabi/samples/* samples/
+```
+Add a symbolic link for libcuda.so on the Shield Tablet:
+```
+cd lib
+ln -s /system/vendor/libcuda.so libcuda.so
+```
+
+The NVIDIA CUDA for Android files are now in /data/data/com.termux/files/usr/local/cuda-7.0. We need the Linux for Tegra executables for compiling CUDA C++ next.
+
+
