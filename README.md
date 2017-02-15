@@ -74,9 +74,16 @@ https://developer.nvidia.com/codeworks-android
 
 The CUDA toolkit includes several CUDA libraries, of which the CUDA runtime library libcudart.so is most important for running executables with embedded CUDA kernels. Most other libraries provide extended functionality including Fourier transformation, linear algebra and others. Generally, CUDA driver API applications link to libcuda.so, which is supplied by the CUDA driver that is installed with the system and cannot be changed unless the tablet is rooted. Thankfully, the Pixel C comes with a GPU Android kernel module and libnvcompute.so, which is the Pixel C version of the CUDA driver library. For CUDA runntime API applications it appears that libcudart.so dynamically loads libcuda.so (not listed as dynamic dependency in the ELF), which then interfaces with the GPU Android/Linux kernel module. (Linux/Android kernel and CUDA kernels are different). On the Pixel C libnvcompute.so can be used instead of libcuda.so. The NVIDIA Shield Tablet comes with a regular libcuda.so.
 
-We will use the NVIDIA CUDA for Android libraries and include files. However, there are no native Android executables for the CUDA compiler and associated utilities. The Linux for Tegra CUDA toolkit for the compiler executables. The aim here is to habe NVIDIA's CUDA compiler nvcc running for PyCUDA. As there are several executables and dynamically linked libraries we will use a PROOT strategy. PROOT will emulate a linux host system for nvcc temporarily during compilation. The CUDA executables will be linked to libraries and running in the Android system. Essentially, the idea is the same as of the GNURoot Debian app but much more limited.
+We will use the NVIDIA CUDA for Android libraries and include files. However, there are no native Android executables for the CUDA compiler and associated utilities. The Linux for Tegra CUDA toolkit for the compiler executables. The aim here is to habe NVIDIA's CUDA compiler nvcc running for PyCUDA. As there are several executables and dynamically linked libraries we will use a PRroot strategy. A PRoot package is available for Termux and will emulate a linux guest system for nvcc temporarily during compilation. For more information on this ingenious piece of magic see:
+
+https://github.com/proot-me/PRoot
+
+Essentially, the idea is the same as of the GNURoot Debian app but we make much more limited use of the PRoot facilities.
 
 https://play.google.com/store/apps/details?id=com.gnuroot.debian&hl=en
+
+The CUDA executables will be linked to Android libraries and running in the Android system. This is necessary as it appears the Android linker will not load and link to libcuda.so from a PRoot environment and the linux dynamic loader appears not capable to link to libcuda.so. The reason for this is not entirely clear and could involve Selinux or setuid restrictions in the later Android versions. Installing the Linux for Tegra CUDA toolkit and using libcuda.so in GNURoot Debian allow the use of the CUDA driver API in Android KitKat 4.4.
+
 
 The following sections provide detailed instructions on how to get the required files and how to string them together for a working system.
 
