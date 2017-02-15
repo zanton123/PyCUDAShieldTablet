@@ -1,0 +1,2 @@
+export PATH=/data/data/com.termux/files/usr/bin:/data/data/com.termux/files/usr/bin/applets
+export LD_LIBRARY_PATH=/data/data/com.termux/files/usr/lib:/data/data/com.termux/files/usr/local/cuda/lib64:/system/lib64:/system/vendor/lib64
