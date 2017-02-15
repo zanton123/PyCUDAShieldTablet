@@ -22,6 +22,7 @@ From the terminal prompt enter the following commands:
 ```
 apt update
 apt install clang python2 python2-dev
+apt install build-essential, cmake, make, perl, wget
 
 LDFLAGS=" -lm -lcompiler_rt" pip2 install numpy
 LDFLAGS=" -lm -lcompiler_rt" pip2 install pandas
