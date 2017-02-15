@@ -371,7 +371,7 @@ From the **Tegra_Linux_Sample-Root-Filesystem_R24.1.0_aarch64.tbz2** archive cop
     └── tmp
 
 ```
-Shell files for the home/ folder (cuda, normal, and .bashrc), and the usr/bin/ folder (nvcc, nvcc_android, and linux_sh) are in the respective folders of this repository.
+Shell files for the home/ folder (cuda, normal, and .bashrc), and the usr/bin/ folder (nvcc, nvcc_android, and linux_sh) are in the respective folders of this repository. Make sure that files in bin/, usr/bin/, usr/linux/, usr/local/cuda-7.0/bin, and usr/local/cuda-7.0/nvvm/bin/ have execute permission.
 
 Install CUDA 7.0 samples
 
