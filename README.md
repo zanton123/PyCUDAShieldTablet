@@ -177,7 +177,7 @@ When prompted select first JETPACK 2.2 – Tegra X1 64 bit and then rerun to sel
 
 **_For the Pixel C:_**
 
-From the **Tegra_Linux_Sample-Root-Filesystem_R24.1.0_aarch64.tbz2** archive copy the following files below from the **/lib/aarch64-linux-gnu/** to a portable drive. The CUDA toolkit files are in copy the **/usr/local/cuda-7.0/** folder of the **cuda-repo-l4t-7-0-local_7.0-76_arm64.deb** archive. Copy the files, symbolic links and folders to the Download folder on the Pixel C and move them to a new folder structure under the /data/data/com.termux/files/ termux main folder The file structure should be as follows:
+From the **Tegra_Linux_Sample-Root-Filesystem_R24.1.0_aarch64.tbz2** archive copy the following files below from the **/lib/aarch64-linux-gnu/** to a portable drive. The CUDA toolkit files are in the **/usr/local/cuda-7.0/** folder of the **cuda-repo-l4t-7-0-local_7.0-76_arm64.deb** archive and need be transfered to the Termux usr/local/cuda-7.0/ folder. Copy the files, symbolic links and folders to the Pixel C establishing the following folder structure under the /data/data/com.termux/files/ Termux main folder:
 ```
 /data/data/com.termux/files/
 ├── bin
