@@ -175,7 +175,9 @@ chmod +x JetPack-L4T-2.2-linux-x64.run
 ```
 When prompted select first JETPACK 2.2 – Tegra X1 64 bit and then rerun to select JETPACK 2.2 - Tegra X1 32 bit. The installer will download all files and then ask to flash the operating system image to a Jetson X1 development board. At this point the installation can be aborted. In the **~/Downloads/Jetpack_2.2/jetpack_download/** folder are two archives: **cuda-repo-l4t-7-0-local_7.0-76_arm64.deb** contains the ARM64 CUDA 7.0 toolkit and **Tegra_Linux_Sample-Root-Filesystem_R24.1.0_aarch64.tbz2** contains the ARM64 Linux root file system for the Pixel C. The respective armhf archives for the Shield Tablet are **cuda-repo-l4t-7-0-local_7.0-76_armhf.deb** and **Tegra_Linux_Sample-Root-Filesystem_R24.1.0_armhf.tbz2**. Use Ubuntu Archive Manager to open these archives and then drag and drop between file manager windows to extract and copy files and folders from these archieves (on the file right click the mouse to see the options for open).
 
-From the **Tegra_Linux_Sample-Root-Filesystem_R24.1.0_aarch64.tbz2** archive copy the following files from the **/lib/aarch64-linux-gnu/** to a portable drive. Then copy the files/ folder to the Download folder on the Pixel C and move them to a new folder structure under the /data/data/com.termux/files/ termux main folder The file structure should be as follows:
+**_For the Pixel C:_**
+
+From the **Tegra_Linux_Sample-Root-Filesystem_R24.1.0_aarch64.tbz2** archive copy the following files below from the **/lib/aarch64-linux-gnu/** to a portable drive. The CUDA toolkit files are in copy the **/usr/local/cuda-7.0/** folder of the **cuda-repo-l4t-7-0-local_7.0-76_arm64.deb** archive. Copy the files, symbolic links and folders to the Download folder on the Pixel C and move them to a new folder structure under the /data/data/com.termux/files/ termux main folder The file structure should be as follows:
 ```
 /data/data/com.termux/files/
 ├── bin
