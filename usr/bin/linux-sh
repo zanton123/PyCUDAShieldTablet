@@ -1,0 +1,12 @@
+#!/data/data/com.termux/files/usr/bin/sh
+LD_STORE=$LD_LIBRARY_PATH
+PATH_STORE=$PATH
+TMP_STORE=$TMPDIR
+PATH=/bin:/usr/linux:/usr/local/cuda/bin
+LD_LIBRARY_PATH=/lib:/system/lib64:/system/vendor/lib64:/usr/local/cuda/lib:/usr/local/cuda/lib64:/data/data/com.termux/files/usr/lib
+TMPDIR=/tmp
+/data/data/com.termux/files/usr/bin/proot -k "3.19.0" -S /data/data/com.termux/files/ -0 --link2symlink -b /system/lib64 -b /system/vendor/lib64 -b /system/bin -b /storage/emulated/0:/home/storage/shared /usr/linux/busybox sh
+LD_LIBRARY_PATH=$LD_STORE
+PATH=$PATH_STORE
+TMPDIR=$TMP_STORE
+
