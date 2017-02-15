@@ -155,6 +155,217 @@ cd lib
 ln -s /system/vendor/libcuda.so libcuda.so
 ```
 
-The NVIDIA CUDA for Android files are now in /data/data/com.termux/files/usr/local/cuda-7.0. We need the Linux for Tegra executables for compiling CUDA C++ next.
+The NVIDIA CUDA for Android files are now in /data/data/com.termux/files/usr/local/cuda-7.0. We will install the Linux for Tegra executables for compiling CUDA C++ next.
 
+##NVIDIA Linux for Tegra
 
+NVIDIA also does not supply CUDA compiler components that run natively on Android (the toolkit contains only profiling and analysis tools ported to Android). However, both armhf for the Tegra K1 and ARM64 for the Tegra X1 versions are in the Linux for Tegra Archive: 
+
+https://developer.nvidia.com/embedded/linux-tegra-archive
+
+Jetson TX1 R24.1 – May 2016 contains the CUDA 7.0 tools matching our CUDA installation and can be downloaded from:
+
+https://developer.nvidia.com/embedded/downloads
+
+Scroll down the list and select **JetPack for L4T 2.2 2016/06/15** for download on your Ubuntu PC. Locate **JetPack-L4T-2.2-linux-x64.run** file in an Ubuntu terminal and run:
+```
+cd ~/Downloads
+chmod +x JetPack-L4T-2.2-linux-x64.run
+./JetPack-L4T-2.2-linux-x64.run
+```
+When prompted select first JETPACK 2.2 – Tegra X1 64 bit and then rerun to select JETPACK 2.2 - Tegra X1 32 bit. The installer will download all files and then ask to flash the operating system image to a Jetson X1 development board. At this point the installation can be aborted. In the **~/Downloads/Jetpack_2.2/jetpack_download/** folder are two archives: **cuda-repo-l4t-7-0-local_7.0-76_arm64.deb** contains the ARM64 CUDA 7.0 toolkit and **Tegra_Linux_Sample-Root-Filesystem_R24.1.0_aarch64.tbz2** contains the ARM64 Linux root file system for the Pixel C. The respective armhf archives for the Shield Tablet are **cuda-repo-l4t-7-0-local_7.0-76_armhf.deb** and **Tegra_Linux_Sample-Root-Filesystem_R24.1.0_armhf.tbz2**. Use Ubuntu Archive Manager to open these archives and then drag and drop between file manager windows to extract and copy files and folders from these archieves (on the file right click the mouse to see the options for open).
+
+From the **Tegra_Linux_Sample-Root-Filesystem_R24.1.0_aarch64.tbz2** archive copy the following files from the **/lib/aarch64-linux-gnu/** to a portable drive. Then copy the files/ folder to the Download folder on the Pixel C and move them to a new folder structure under the /data/data/com.termux/files/ termux main folder The file structure should be as follows:
+```
+/data/data/com.termux/files/
+├── bin
+│   ├── bunzip2
+│   ├── bzip2
+│   ├── cat
+│   ├── chmod
+│   ├── cp
+│   ├── dash
+│   ├── date
+│   ├── echo
+│   ├── egrep
+│   ├── grep
+│   ├── gunzip
+│   ├── gzip
+│   ├── mkdir
+│   ├── mv
+│   ├── rm
+│   ├── rmdir
+│   ├── sed
+│   ├── sh -> dash
+│   ├── tar
+│   └── which
+│
+├── home
+│   ├── cuda
+│   └── normal
+│
+├── lib
+│   ├── aarch64-linux-gnu
+│   │   ├── ld-2.19.so
+│   │   ├── ld-linux-aarch64.so.1 -> ld-2.19.so
+│   │   ├── libacl.so.1 -> libacl.so.1.1.0
+│   │   ├── libacl.so.1.1.0
+│   │   ├── libattr.so.1 -> libattr.so.1.1.0
+│   │   ├── libattr.so.1.1.0
+│   │   ├── libc-2.19.so
+│   │   ├── libc.so.6 -> libc-2.19.so
+│   │   ├── libdl-2.19.so
+│   │   ├── libdl.so.2 -> libdl-2.19.so
+│   │   ├── libgcc_s.so.1
+│   │   ├── libm-2.19.so
+│   │   ├── libm.so.6 -> libm-2.19.so
+│   │   ├── libpcre.so.3 -> libpcre.so.3.13.1
+│   │   ├── libpcre.so.3.13.1
+│   │   ├── libpthread-2.19.so
+│   │   ├── libpthread.so.0 -> libpthread-2.19.so
+│   │   ├── librt-2.19.so
+│   │   ├── librt.so.1 -> librt-2.19.so
+│   │   ├── libselinux.so.1
+│   │   ├── libtinfo.so.5 -> libtinfo.so.5.9
+│   │   ├── libtinfo.so.5.9
+│   │   ├── libz.so.1 -> libz.so.1.2.8
+│   │   └── libz.so.1.2.8
+│   ├── ld-2.19.so
+│   └── ld-linux-aarch64.so.1 -> aarch64-linux-gnu/ld-2.19.so
+│
+└── usr
+    ├── bin
+    │   ├── cuobjdump
+    │   ├── fatbinary
+    │   ├── linux-sh
+    │   ├── maxas
+    │   ├── nvcc
+    │   ├── nvcc_android
+    │   ├── nvdisasm
+    │   ├── nvlink
+    │   └── ptxas
+    ├── include
+    │   └── wordexp.h
+    ├── lib
+    │   ├── aarch64-linux-gnu
+    │   │   ├── libcloog-isl.so.4 -> libcloog-isl.so.4.0.0
+    │   │   ├── libcloog-isl.so.4.0.0
+    │   │   ├── libgmp.so.10 -> libgmp.so.10.1.3
+    │   │   ├── libgmp.so.10.1.3
+    │   │   ├── libisl.so.10 -> libisl.so.10.2.2
+    │   │   ├── libisl.so.10.2.2
+    │   │   ├── libmpc.so.3 -> libmpc.so.3.0.0
+    │   │   ├── libmpc.so.3.0.0
+    │   │   ├── libmpfr.so.4 -> libmpfr.so.4.1.2
+    │   │   ├── libmpfr.so.4.1.2
+    │   │   ├── libstdc++.so.6 -> libstdc++.so.6.0.19
+    │   │   └── libstdc++.so.6.0.19
+    │   ├── gcc
+    │   │   └── aarch64-linux-gnu
+    │   │       ├── 4.8
+    │   │       │   ├── cc1
+    │   │       │   ├── cc1plus
+    │   │       │   ├── collect2
+    │   │       │   ├── include
+    │   │       │   │   ├── arm_neon.h
+    │   │       │   │   ├── backtrace.h
+    │   │       │   │   ├── backtrace-supported.h
+    │   │       │   │   ├── float.h
+    │   │       │   │   ├── iso646.h
+    │   │       │   │   ├── omp.h
+    │   │       │   │   ├── stdalign.h
+    │   │       │   │   ├── stdarg.h
+    │   │       │   │   ├── stdbool.h
+    │   │       │   │   ├── stddef.h
+    │   │       │   │   ├── stdfix.h
+    │   │       │   │   ├── stdint-gcc.h
+    │   │       │   │   ├── stdint.h
+    │   │       │   │   ├── stdnoreturn.h
+    │   │       │   │   ├── unwind.h
+    │   │       │   │   └── varargs.h
+    │   │       │   ├── liblto_plugin.so -> liblto_plugin.so.0.0.0
+    │   │       │   ├── liblto_plugin.so.0 -> liblto_plugin.so.0.0.0
+    │   │       │   ├── liblto_plugin.so.0.0.0
+    │   │       │   ├── lto1
+    │   │       │   └── lto-wrapper
+    │   │       └── 4.8.2 -> 4.8/
+    │   ├── libbfd-2.24-system.so
+    │   └── libopcodes-2.24-system.so
+    │
+    ├── linux
+    │   ├── ar
+    │   ├── as
+    │   ├── busybox
+    │   ├── c++filt
+    │   ├── cpp -> cpp-4.8
+    │   ├── cpp-4.8
+    │   ├── g++ -> g++-4.8
+    │   ├── g++-4.8
+    │   ├── gcc -> gcc-4.8
+    │   ├── gcc-4.8
+    │   ├── gcc-ar -> gcc-ar-4.8
+    │   ├── gcc-ar-4.8
+    │   ├── gcc-nm -> gcc-nm-4.8
+    │   ├── gcc-nm-4.8
+    │   ├── gcc-ranlib -> gcc-ranlib-4.8
+    │   ├── gcc-ranlib-4.8
+    │   ├── ld -> ld.bfd
+    │   ├── ld.bfd
+    │   ├── objcopy
+    │   ├── objdump
+    │   ├── readelf
+    │   └── uname
+    │
+    ├── local
+    │   ├── cuda -> cuda-7.0/
+    │   └── cuda-7.0
+    │       ├── bin
+    │       │   ├── bin2c
+    │       │   ├── crt
+    │       │   │   ├── link.stub
+    │       │   │   └── prelink.stub
+    │       │   ├── cudafe
+    │       │   ├── cudafe++
+    │       │   ├── cuda-gdb
+    │       │   ├── cuda-gdbserver
+    │       │   ├── cuda-memcheck
+    │       │   ├── cuobjdump
+    │       │   ├── cuobjdump65
+    │       │   ├── cuobjdump80
+    │       │   ├── fatbinary
+    │       │   ├── filehash
+    │       │   ├── nvcc
+    │       │   ├── nvcc.profile
+    │       │   ├── nvdisasm
+    │       │   ├── nvdisasm65
+    │       │   ├── nvdisasm80
+    │       │   ├── nvlink
+    │       │   ├── nvprof
+    │       │   ├── nvprune
+    │       │   └── ptxas
+    │       │
+    │       ├── include (... include all subfolders)
+    │       │
+    │       ├── lib -> lib64/
+    │       ├── lib64 (... include all subfolders)
+    │       │
+    │       ├── nvvm
+    │       │   ├── bin
+    │       │   │   └── cicc
+    │       │   ├── include
+    │       │   │   └── nvvm.h
+    │       │   ├── lib64
+    │       │   │   ├── libnvvm.so -> libnvvm.so.3
+    │       │   │   ├── libnvvm.so.3 -> libnvvm.so.3.0.0
+    │       │   │   └── libnvvm.so.3.0.0
+    │       │   ├── libdevice
+    │       │   │   ├── libdevice.compute_20.10.bc
+    │       │   │   ├── libdevice.compute_30.10.bc
+    │       │   │   └── libdevice.compute_35.10.bc
+    │       │   └── libnvvm-samples (... include all subfolders)
+    │       │
+    │       └── samples (... include all subfolders)
+    │
+    └── tmp
+
+```
