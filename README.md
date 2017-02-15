@@ -4,7 +4,17 @@ This repository contains the files to get PyCUDA running on the Google Pixel C u
 
 **STATUS:** Pycuda works on the NVIDIA Shield Tablet (original) running Android Marshmallow 6.0.1 and the google Pixel C running Android Nougat 7.0.1 with few limitations. There is a somewhat elaborate installation process for getting nvcc and CUDA 7.0 running. Detail to follow here soon. On the Pixel C MaxAs works both for disassembly and assembly of kernels from SASS, which means can run reassembled kernels from PyCUDA as of today. Unfortunately, MaxAs won't do Keppler code for the shield Tegra K1.
 
+
+##Install Termux by Fredrik Fornwall from the google play store
+https://play.google.com/store/apps/details?id=com.termux
+
+Running Termux opens an Android Terminal with a shell command prompt. This Android shell  features many commands known from Linux distributions. It also comes with a range of packages that have been cross-compiled from Linux to run on native Android, see more at: https://termux.com/
+
+Follow the Termux online help to setup storage and preferences:
+https://termux.com/help.html
+
 This tutorial starts with installing several Python packages that are specially useful for seuqence analysis. If you are not a biologist or do not care you can skip through the initial steps, but do install numpy, cython and pycuda obviously.
+
 
 ##Install Python 2.7 in Termux
 
@@ -49,7 +59,7 @@ static inline void wordfree(wordexp_t *__wordexp)
 #endif
 ```
 
-Write and close the file with `Ctrl`+`c` `:wq` ENTER. The install pysam as follows:
+Write and close the file with `Ctrl`+`c` `:wq` ENTER. Then install pysam as follows:
 
 `LDFLAGS=" -lm -lcompiler_rt" pip2 install pysam`
 
