@@ -1,0 +1,2 @@
+#!/data/data/com.termux/files/usr/bin/sh
+/data/data/com.termux/files/usr/lib64/ld-linux-aarch64.so.1 /data/data/com.termux/files/usr/local/cuda/bin/nvlink $*
