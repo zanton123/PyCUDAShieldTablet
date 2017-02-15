@@ -79,7 +79,7 @@ We will use the NVIDIA CUDA for Android libraries and include files. However, th
 
 https://github.com/proot-me/PRoot
 
-Essentially, this is the same idea as used by the GNURoot Debian app but we make much more limited use of the PRoot facilities.
+Essentially, this is the same idea as used by the GNURoot Debian app but we make very limited use of the PRoot facilities.
 
 https://play.google.com/store/apps/details?id=com.gnuroot.debian&hl=en
 
