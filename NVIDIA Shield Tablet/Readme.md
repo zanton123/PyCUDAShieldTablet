@@ -1,4 +1,4 @@
-#Programming and Running PyCUDA applications on the NVIDIA Shield Tablet (Tegra K1) using CUDA 7.0
+# Programming and Running PyCUDA applications on the NVIDIA Shield Tablet (Tegra K1) using CUDA 7.0
 
 This folder contains the files to get PyCUDA running on the NVIDIA Shield Tablet (and possibly Shield Tablet K1) using Termux (by Fredrik Fornwall).
 
