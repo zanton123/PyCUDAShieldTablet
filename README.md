@@ -5,7 +5,7 @@ This repository contains the files to get PyCUDA running on the Google Pixel C u
 **STATUS:** Pycuda works on the NVIDIA Shield Tablet (original) running Android Marshmallow 6.0.1 and the google Pixel C running Android Nougat 7.0.1 with few limitations. There is a somewhat elaborate installation process for getting nvcc and CUDA 7.0 running. Detail to follow down here. On the Pixel C MaxAs works both for disassembly and assembly of kernels from SASS, which means can run reassembled kernels from PyCUDA. Unfortunately, MaxAs won't do Keppler code for the Shield Tegra K1.
 
 
-##Install Termux by Fredrik Fornwall from the google play store
+## Install Termux by Fredrik Fornwall from the google play store
 https://play.google.com/store/apps/details?id=com.termux
 
 Running Termux opens an Android Terminal with a shell command prompt. This Android shell  features many commands known from Linux distributions. It also comes with a range of packages that have been cross-compiled from Linux to run on native Android, see more at: https://termux.com/
@@ -14,7 +14,7 @@ Follow the Termux online help to setup storage and preferences:
 https://termux.com/help.html
 
 
-##Install Python 2.7 in Termux
+## Install Python 2.7 in Termux
 
 This tutorial starts with installing several useful packages in Termux. Python packages that are specially useful for sequence analysis might not be of interest to people that are not biologists or do not care. You can by all means skip through these, but do install numpy, cython and pycuda obviously these are needed.
 
@@ -68,7 +68,7 @@ Add pysam library folder /data/data/com.termux/files/usr/lib/python2.7/site-pack
 
 `export LD_LIBRARY_PATH=LD_LIBRARY_PATH:/data/data/com.termux/files/usr/lib/python2.7/site-packages/pysam`
 
-##NVIDIA CUDA for Android
+## NVIDIA CUDA for Android
 
 Nvidia provides support for CUDA development for Android in their CodeWorks for Android toolkit:
 https://developer.nvidia.com/codeworks-android
@@ -157,7 +157,7 @@ ln -s /system/vendor/libcuda.so libcuda.so
 
 The NVIDIA CUDA for Android files are now in /data/data/com.termux/files/usr/local/cuda-7.0. Make sure that files in the bin/ folder have execute permission. We will install the Linux for Tegra executables for compiling CUDA C++ next.
 
-##NVIDIA Linux for Tegra
+## NVIDIA Linux for Tegra
 
 NVIDIA does not supply CUDA compiler components that run natively on Android (the toolkit contains only profiling and analysis tools ported to Android). However, both armhf for the Tegra K1 and ARM64 for the Tegra X1 versions are in the Linux for Tegra Archive: 
 
@@ -385,7 +385,7 @@ tar -xzvf <archive,tar.gz> <folder>
 cd to folder, . cuda, cp nvcc_ ... script and compile . nvcc_ ...
 ```
 
-##Install PyCUDA form sources
+## Install PyCUDA form sources
 
 Download pycuda from PyPi https://pypi.python.org/pypi/pycuda the archive pycuda-2016.1.2.tar.gz to the Download folder using your web browser. For downloading using wget use the following URL for the file:
 
@@ -430,7 +430,7 @@ pip2 uninstall pycuda
 pip2 uninstall pytools
 ```
 
-##Installing MAXAS on the Pixel C
+## Installing MAXAS on the Pixel C
 
 MAXAS by Scott Grey at NervanaSystems https://github.com/NervanaSystems/maxas requires nvdisasm from the CUDA 6.5 toolkit (maxas invokes cuobjdump, which then invokes nvdisasm). For the Pixel C we will require a arm64 version for Tegra X1. Nvidia offers a generic CUDA 6.5 toolkit for arm64 in the CUDA archive: https://developer.nvidia.com/cuda-toolkit-65
 
